@@ -1,3 +1,5 @@
+import fbService from '../services/firebase'
+import { store } from '../store'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -24,6 +26,34 @@ export default function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE
+  })
+
+  // This allows the application to halt rendering until
+  // Firebase is finished with its initialization process,
+  // and handle the user accordingly
+  Router.beforeEach(async (to, from, next) => {
+    const { ensureAuthIsInitialized, isAuthenticated } = fbService
+    try {
+      // Force the app to wait until Firebase has
+      // finished its initialization, and handle the
+      // authentication state of the user properly
+      await ensureAuthIsInitialized(store)
+      console.log(to.matched.some(record => record.meta.requiresAuth))
+      if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (isAuthenticated(store)) {
+          next()
+        } else {
+          next({ name: 'Login' })
+        }
+      } else if ((to.name === 'Register' && isAuthenticated(store)) ||
+        (to.name === 'Login' && isAuthenticated(store))) {
+        next('/user')
+      } else {
+        next()
+      }
+    } catch (err) {
+      console.log(err)
+    }
   })
 
   return Router
