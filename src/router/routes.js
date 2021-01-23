@@ -4,8 +4,16 @@ const routes = [
     component: () => import('layouts/InitialLayout.vue'),
     redirect: '/login',
     children: [
-      { path: 'login', component: () => import('pages/Initial/Login.vue') },
-      { path: 'register', component: () => import('pages/Initial/Register.vue') }
+      {
+        path: 'login/:success?',
+        name: 'Login',
+        component: () => import('pages/Initial/Login.vue')
+      },
+      {
+        path: 'register',
+        name: 'Register',
+        component: () => import('pages/Initial/Register.vue')
+      }
     ]
   },
   {

@@ -30,6 +30,7 @@ export default {
   methods: {
     onSubmit (user) {
       console.log(user)
+      this.$router.replace({ name: 'Login', params: { success: 'succeed' } })
     }
   }
 }

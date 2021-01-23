@@ -28,6 +28,18 @@ export default {
     onSubmit (user) {
       console.log(user)
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      if (from.name === 'Register' && to.params.success === 'succeed') {
+        vm.$q.notify({
+          color: 'green-4',
+          textColor: 'white',
+          icon: 'cloud_done',
+          message: 'Successful registration. Please sign.'
+        })
+      }
+    })
   }
 }
 </script>
