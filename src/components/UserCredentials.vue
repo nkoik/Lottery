@@ -100,7 +100,8 @@ export default {
   methods: {
     onSubmit () {
       this.$v.$touch()
-      if (!this.$v.$error) {
+      if ((this.register && !this.$v.$error) ||
+        (!this.register && this.$v.password.required)) {
         this.$emit('success', {
           email: this.email,
           password: this.password

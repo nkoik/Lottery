@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import authorization from './authorization'
+import draw from './draw'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ let store = null
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      authorization
+      authorization,
+      draw
     },
 
     // enable strict mode (adds overhead!)

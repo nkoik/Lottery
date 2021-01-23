@@ -36,7 +36,7 @@ export default function (/* { store, ssrContext } */) {
     const toRegister = to.name === 'Register'
     const fromRegister = from.name === 'Register'
     const toLogin = to.name === 'Login'
-    // const fromLogin = from.name === 'Login'
+    const toDraw = to.name === 'Draw'
     try {
       // Force the app to wait until Firebase has
       // finished its initialization, and handle the
@@ -44,14 +44,19 @@ export default function (/* { store, ssrContext } */) {
       await ensureAuthIsInitialized(store)
       if (to.matched.some(record => record.meta.requiresAuth)) {
         if (isAuthenticated(store)) {
-          next()
+          if (store.state.draw.isDrawOpen) {
+            next({ name: 'Draw' })
+          } else if (toDraw) {
+            next({ name: 'Home' })
+          } else {
+            next()
+          }
         } else {
           next({ name: 'Login' })
         }
       } else if (fromRegister && toLogin && isAuthenticated(store)) {
         next()
-      } else if ((toRegister && isAuthenticated(store)) ||
-        (toLogin && isAuthenticated(store))) {
+      } else if ((toRegister || toLogin) && isAuthenticated(store)) {
         next({ name: 'Home' })
       } else {
         next()
