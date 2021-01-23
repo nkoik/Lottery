@@ -6,7 +6,7 @@
           <q-route-tab to="/login" label="Login" />
           <q-route-tab to="/register" label="Register" />
         </q-tabs>
-        <router-view />
+        <router-view :key="$route.name"/>
       </q-card>
     </q-page-container>
 
@@ -15,10 +15,6 @@
 
 <script>
 export default {
-  component: 'InitialLayout',
-  data () {
-    return {
-    }
-  }
+  component: 'InitialLayout'
 }
 </script>
