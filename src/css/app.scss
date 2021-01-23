@@ -1,0 +1,8 @@
+// app global css in SCSS form
+.container {
+  height: 100vh;
+  &__card {
+    max-height: 500px;
+    min-width: 500px;
+  }
+}
