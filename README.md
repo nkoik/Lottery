@@ -1,4 +1,4 @@
-# opap (opap)
+# Lottery Game
 
 A Quasar Framework app
 
