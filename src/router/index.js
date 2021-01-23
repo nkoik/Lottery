@@ -33,21 +33,26 @@ export default function (/* { store, ssrContext } */) {
   // and handle the user accordingly
   Router.beforeEach(async (to, from, next) => {
     const { ensureAuthIsInitialized, isAuthenticated } = fbService
+    const toRegister = to.name === 'Register'
+    const fromRegister = from.name === 'Register'
+    const toLogin = to.name === 'Login'
+    // const fromLogin = from.name === 'Login'
     try {
       // Force the app to wait until Firebase has
       // finished its initialization, and handle the
       // authentication state of the user properly
       await ensureAuthIsInitialized(store)
-      console.log(to.matched.some(record => record.meta.requiresAuth))
       if (to.matched.some(record => record.meta.requiresAuth)) {
         if (isAuthenticated(store)) {
           next()
         } else {
           next({ name: 'Login' })
         }
-      } else if ((to.name === 'Register' && isAuthenticated(store)) ||
-        (to.name === 'Login' && isAuthenticated(store))) {
-        next('/user')
+      } else if (fromRegister && toLogin && isAuthenticated(store)) {
+        next()
+      } else if ((toRegister && isAuthenticated(store)) ||
+        (toLogin && isAuthenticated(store))) {
+        next({ name: 'Home' })
       } else {
         next()
       }

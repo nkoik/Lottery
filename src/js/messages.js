@@ -4,6 +4,7 @@ export default {
     required: 'Email is required'
   },
   password: {
-    required: 'Password is required'
+    required: 'Password is required',
+    minLength6: 'Password should be at least 6 characters'
   }
 }

@@ -23,7 +23,11 @@ const routes = [
       requiresAuth: true
     },
     children: [
-      { path: '', component: () => import('pages/Main/Index.vue') }
+      {
+        path: '',
+        name: 'Home',
+        component: () => import('pages/Main/Index.vue')
+      }
     ]
   },
 

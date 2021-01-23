@@ -2,6 +2,7 @@
   <q-form
     @submit="onSubmit"
     class="q-gutter-md"
+    novalidate
   >
     <q-input
       outlined
@@ -20,7 +21,7 @@
       label="Password"
       bottom-slots
       :error-message="passwordMessage[passwordErrorType[0]] || ''"
-      :error="$v.password.$error"
+      :error="register ? $v.password.$error : $v.password.$dirty && !$v.password.required"
       >
       <template v-slot:append>
         <q-icon
@@ -38,7 +39,7 @@
 </template>
 
 <script>
-import { required, email } from 'vuelidate/lib/validators'
+import { required, email, minLength } from 'vuelidate/lib/validators'
 import MESSAGES from '../js/messages'
 
 export default {
@@ -51,9 +52,14 @@ export default {
           class: 'full-width',
           label: 'Submit',
           type: 'submit',
-          color: 'primary'
+          color: 'primary',
+          loading: true
         }
       }
+    },
+    register: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -71,7 +77,8 @@ export default {
       email
     },
     password: {
-      required
+      required,
+      minLength: minLength(6)
     }
   },
   computed: {
@@ -84,6 +91,7 @@ export default {
     },
     passwordErrorType () {
       const validations = {
+        minLength6: !this.$v.password.minLength && this.register,
         required: !this.$v.password.required
       }
       return Object.keys(validations).filter(type => validations[type])
