@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-page-container class="container bg-blue-grey-1 full-width row justify-center items-center">
+    <q-page-container class="container container--lottery full-width row justify-center items-center">
       <q-card class="container__card">
         <q-tabs align="center">
           <q-route-tab to="/login" label="Login" />
