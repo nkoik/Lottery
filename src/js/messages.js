@@ -5,5 +5,5 @@ export default {
   },
   password: {
     required: 'Password is required'
-  },
+  }
 }
