@@ -96,10 +96,7 @@ cfg.module.rules.push({
       // (like functional components as one of the examples),
       // you can manually specify Quasar components/directives to be available everywhere:
       //
-      components: [
-        'QBtn',
-        'QBadge'
-      ],
+      // components: [],
       // directives: [],
 
       // Quasar plugins

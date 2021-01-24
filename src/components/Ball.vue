@@ -1,16 +1,10 @@
-<template functional>
+<template>
   <q-btn
-    :outline="!props.selected && !props.highlighted"
-    :color="props.highlighted ? 'dark' : 'primary'"
-    round
-    :disable="props.disabled"
-    class="q-ml-md"
-    :label="props.label">
-    <q-badge
-      v-if="props.clearable"
-      color="red"
-      floating>X
-    </q-badge>
+    v-bind="dynamicProps"
+    @mouseenter="handleDelete"
+    @mouseleave="handleDelete"
+    @click="$emit(isClearHovered ? 'delete' : 'select', label)"
+  >
   </q-btn>
 </template>
 
@@ -28,7 +22,8 @@ export default {
     },
     label: {
       type: [String, Number],
-      default: '0'
+      default: '0',
+      required: true
     },
     clearable: {
       type: Boolean,
@@ -37,6 +32,33 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    }
+  },
+  data () {
+    return {
+      isClearHovered: false
+    }
+  },
+  computed: {
+    dynamicProps () {
+      const props = {
+        outline: !this.selected && !this.highlighted,
+        color: this.highlighted ? 'dark' : 'primary',
+        round: true,
+        disable: this.disabled,
+        label: this.label
+      }
+      const { label, color, outline, ...restProps } = props
+      return this.isClearHovered
+        ? { icon: 'clear', color: 'red', outline: false, ...restProps }
+        : props
+    }
+  },
+  methods: {
+    handleDelete () {
+      if (this.clearable) {
+        this.isClearHovered = !this.isClearHovered
+      }
     }
   }
 }
