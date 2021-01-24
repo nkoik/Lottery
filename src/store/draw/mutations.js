@@ -12,6 +12,7 @@ export function SET_DRAW_NUMBERS (state, payload) {
 export function CLEAR_DRAW_STATE (state, payload) {
   state.isDrawOpen = false
   state.maxAllowedNumbers = 5
+  state.numbersRange = 30
   state.submittedNumbers = []
   state.drawNumbers = []
 }

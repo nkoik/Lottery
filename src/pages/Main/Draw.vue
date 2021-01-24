@@ -28,15 +28,28 @@
           :highlighted-numbers="randomDrawNumbers"
         />
         <div class="flex justify-center">
-          <q-badge
-          class="text-h6"
-          outline
-          color="primary">
-            Total: {{ priceWon + '€'}}
-          </q-badge>
+          <div
+          class="text-h6">
+            Total winning amount: {{ priceWon + '€'}}
+          </div>
         </div>
       </q-card>
     </div>
+     <q-dialog v-model="isModalOpen" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="verified" color="green-4" text-color="white" />
+          <div class="text-h6 q-ml-sm">
+            Total winning amount: {{ priceWon + '€'}}
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Go back" color="primary" @click="handleGoToHome" />
+          <q-btn label="Save coupon" color="primary" @click="handleSave" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -54,7 +67,8 @@ export default {
       randomDrawNumbers: [],
       timeOutBeginLottery: null,
       intervalRepeatRandom: null,
-      isDrawRunning: false
+      isDrawRunning: false,
+      isModalOpen: false
     }
   },
   computed: {
@@ -70,8 +84,14 @@ export default {
   methods: {
     ...mapMutations({
       setDrawNumbers: 'draw/SET_DRAW_NUMBERS',
-      setDrawOpen: 'draw/SET_DRAW_RUN'
+      resetDrawNumbers: 'draw/RESET_DRAW_NUMBERS',
+      clearDrawState: 'draw/CLEAR_DRAW_STATE'
     }),
+    handleGoToHome () {
+      this.clearDrawState()
+      this.$router.replace({ name: 'Home' })
+    },
+    handleSave () {},
     generateRandomNumberBet () {
       const randomNumber = Math.floor(Math.random() * this.numbersRange) + 1
       if (this.randomDrawNumbers.includes(randomNumber)) {
@@ -84,12 +104,6 @@ export default {
       this.resetBeginLottery()
       this.generateRandomNumberBet()
       this.intervalRepeatRandom = setInterval(() => {
-        if (this.randomDrawNumbers.length >= this.maxAllowedNumbers) {
-          this.isDrawRunning = false
-          this.resetRepeatRandomNumberBet()
-          this.setDrawNumbers(this.randomDrawNumbers)
-          return
-        }
         this.generateRandomNumberBet()
       }, 4000)
     },
@@ -109,6 +123,16 @@ export default {
   },
   mounted () {
     this.beginLottery()
+  },
+  watch: {
+    randomDrawNumbers (numbers) {
+      if (numbers.length >= this.maxAllowedNumbers) {
+        this.resetRepeatRandomNumberBet()
+        this.isDrawRunning = false
+        this.isModalOpen = true
+        this.setDrawNumbers(numbers)
+      }
+    }
   }
 }
 </script>
