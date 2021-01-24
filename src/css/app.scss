@@ -1,6 +1,5 @@
 // app global css in SCSS form
 .container {
-  height: 100vh;
   &--lottery {
     background-image: url('../assets/lottery.jpg');
     background-position: center;
@@ -12,6 +11,11 @@
   }
 }
 
-.lottery-table {
-  max-width: 400px;
+.lottery {
+  &-table {
+    max-width: 350px;
+  }
+  &-tank {
+    min-width: 290px;
+  }
 }

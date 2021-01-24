@@ -1,11 +1,11 @@
 <template>
-  <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card">
-      <div class="text-h6 bg-grey-4 q-pa-md">Select 5 numbers</div>
+  <div class="self-start">
+    <q-card class="card-table">
+      <div class="card-table__title text-h6 bg-grey-4 q-pa-md">Select 5 numbers</div>
       <q-separator />
       <div class="row wrap items-center q-py-md">
         <lottery-ball
-          class="q-ma-sm"
+          class="card-table__lottery q-ma-sm"
           @select="handleSelect"
           v-for="number in range"
           :selected="value.includes(number)"
