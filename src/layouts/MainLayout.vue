@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   component: 'MainLayout',
   data () {
@@ -49,12 +49,18 @@ export default {
     })
   },
   methods: {
+    ...mapMutations({
+      clearDrawState: 'draw/CLEAR_DRAW_STATE'
+    }),
     ...mapActions({
       logoutUser: 'authorization/logoutUser'
     }),
     handleLogoutUser () {
       this.logoutUser()
-        .then(() => this.$router.replace({ name: 'Login' }))
+        .then(() => {
+          this.clearDrawState()
+          this.$router.replace({ name: 'Login' })
+        })
     }
   }
 }
