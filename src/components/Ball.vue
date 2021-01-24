@@ -1,10 +1,17 @@
 <template>
   <q-btn
     v-bind="dynamicProps"
-    @mouseenter="handleDelete"
-    @mouseleave="handleDelete"
     @click="$emit(isClearHovered ? 'delete' : 'select', label)"
   >
+    <q-tooltip
+      v-if="clearable"
+      @before-show="handleDelete"
+      @before-hide="handleDelete"
+      anchor="top middle"
+      :offset="[30, 30]"
+    >
+      Delete
+    </q-tooltip>
   </q-btn>
 </template>
 
@@ -43,7 +50,7 @@ export default {
     dynamicProps () {
       const props = {
         outline: !this.selected && !this.highlighted,
-        color: this.highlighted ? 'dark' : 'primary',
+        color: this.highlighted ? 'dark' : 'indigo',
         round: true,
         disable: this.disabled,
         label: this.label
