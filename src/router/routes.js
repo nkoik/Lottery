@@ -31,7 +31,7 @@ const routes = [
       {
         path: 'draw',
         name: 'Draw',
-        component: () => import('pages/Main/Index.vue')
+        component: () => import('pages/Main/Draw.vue')
       },
       {
         path: 'history',

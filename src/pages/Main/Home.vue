@@ -9,6 +9,7 @@
         <lottery-ball-tank
           class="lottery-tank self-start"
           v-model="selectedNumbers"
+          clearable
         />
         <span
           class="text-center"
