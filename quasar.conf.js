@@ -20,7 +20,8 @@ module.exports = function (/* ctx */) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
       'vuelidate',
-      'serverConnection'
+      'serverConnection',
+      'register-components'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -95,7 +96,10 @@ cfg.module.rules.push({
       // (like functional components as one of the examples),
       // you can manually specify Quasar components/directives to be available everywhere:
       //
-      // components: [],
+      components: [
+        'QBtn',
+        'QBadge'
+      ],
       // directives: [],
 
       // Quasar plugins

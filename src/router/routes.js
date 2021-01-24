@@ -26,7 +26,7 @@ const routes = [
       {
         path: '',
         name: 'Home',
-        component: () => import('pages/Main/Index.vue')
+        component: () => import('pages/Main/Home.vue')
       },
       {
         path: 'draw',
