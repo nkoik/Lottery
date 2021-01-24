@@ -1,6 +1,6 @@
 <template>
     <q-card class="card-tank">
-      <div class="card-tank__title text-h6 bg-grey-4 q-pa-md">My BET</div>
+      <div class="card-tank__title text-h6 bg-grey-4 q-pa-md">{{ title }}</div>
       <q-space/>
       <q-separator />
       <div class="row wrap items-center q-py-md text-center">
@@ -9,9 +9,10 @@
           @delete="handleDelete"
           v-for="number in value"
           :selected="value.includes(number)"
+          :highlighted="highlightedNumbers.includes(number)"
           :key="number"
           :label="number"
-          clearable
+          :clearable="clearable"
         />
       </div>
     </q-card>
@@ -21,9 +22,21 @@
 export default {
   name: 'LotteryBallTank',
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     value: {
       type: [Array],
       default: () => []
+    },
+    highlightedNumbers: {
+      type: [Array],
+      default: () => []
+    },
+    clearable: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
