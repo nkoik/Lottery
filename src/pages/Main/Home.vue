@@ -1,6 +1,6 @@
 <template>
   <q-page class="home-container full-width flex row flex-center bg-blue-2">
-    <div class="flex justify-between col-6">
+    <div class="flex justify-between col-sm-10 col-md-8 col-lg-6">
       <lottery-ball-table
         class="lottery-table self-start"
         v-model="selectedNumbers"
@@ -53,12 +53,12 @@ export default {
   methods: {
     ...mapMutations({
       submitNumbers: 'draw/SET_SUBMITTED_NUMBERS',
-      isDrawOpen: 'draw/SET_DRAW_RUN'
+      setDrawOpen: 'draw/SET_DRAW_RUN'
     }),
     handleSubmitBet () {
+      this.setDrawOpen(true)
       this.submitNumbers(this.selectedNumbers)
-      this.isDrawOpen(true)
-      this.$router.push({ name: 'Draw' })
+      this.$router.replace({ name: 'Draw' })
     }
   }
 }
