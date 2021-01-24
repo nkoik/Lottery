@@ -45,11 +45,9 @@ export default function (/* { store, ssrContext } */) {
       if (to.matched.some(record => record.meta.requiresAuth)) {
         if (isAuthenticated(store)) {
           if (store.state.draw.isDrawOpen) {
-            next({ name: 'Draw' })
-          } else if (toDraw) {
-            next({ name: 'Home' })
+            toDraw ? next() : next({ name: 'Draw' })
           } else {
-            next()
+            toDraw ? next({ name: 'Home' }) : next()
           }
         } else {
           next({ name: 'Login' })
