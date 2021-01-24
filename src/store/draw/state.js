@@ -1,3 +1,5 @@
 export default {
-  isDrawOpen: false
+  isDrawOpen: false,
+  maxNumbersAllowed: 5,
+  submittedNumbers: []
 }
