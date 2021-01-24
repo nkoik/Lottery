@@ -24,7 +24,7 @@
         <lottery-ball-tank
           title="My BET"
           class="lottery-tank self-start"
-          :value="submittedNumbers.sort()"
+          :value="submittedNumbers"
           :highlighted-numbers="randomDrawNumbers"
         />
         <div class="flex justify-center">
