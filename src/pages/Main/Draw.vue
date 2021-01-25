@@ -3,7 +3,7 @@
     <div class="flex justify-between col-sm-10 col-md-8 col-lg-6">
       <q-card class="flex column justify-between">
         <lottery-ball-tank
-          title="Draw Numbers"
+          :title="`Draw ${ drawTimeStamp ? `#${drawUID}` : ''}`"
           class="lottery-tank self-start"
           :value="randomDrawNumbers"
         />
@@ -45,8 +45,15 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Go back" color="primary" @click="handleGoToHome" />
-          <q-btn label="Save coupon" color="primary" @click="handleSave" />
+          <template v-if="!loading">
+            <q-btn flat label="Go back" color="primary" @click="handleGoToHome" />
+            <q-btn label="Save coupon" color="primary" @click="handleSave" />
+          </template>
+          <q-spinner
+            v-else
+            color="primary"
+            size="md"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -65,20 +72,26 @@ export default {
   data () {
     return {
       randomDrawNumbers: [],
+      drawTimeStamp: null,
       timeOutBeginLottery: null,
       intervalRepeatRandom: null,
       isDrawRunning: false,
-      isModalOpen: false
+      isModalOpen: false,
+      loading: false
     }
   },
   computed: {
     ...mapState('draw', ['maxAllowedNumbers', 'submittedNumbers', 'drawNumbers', 'numbersRange']),
+    ...mapState('authorization', ['user']),
     isEmptyDrawNumbers () {
       return this.randomDrawNumbers.length === 0
     },
     priceWon () {
       const numbersMatch = this.submittedNumbers.filter((number) => this.randomDrawNumbers.includes(number)).length
       return PRICES[numbersMatch] || 0
+    },
+    drawUID () {
+      return `D-${this.drawTimeStamp}`
     }
   },
   methods: {
@@ -91,7 +104,38 @@ export default {
       this.clearDrawState()
       this.$router.replace({ name: 'Home' })
     },
-    handleSave () {},
+    handleSave () {
+      this.loading = true
+      const usersRef = this.$fb.db.collection('users').doc(this.user.email)
+      const drawsRef = this.$fb.db.collection('draws').doc(this.drawUID)
+      drawsRef.set({
+        numbers: this.randomDrawNumbers,
+        timestamp: this.drawTimeStamp
+      })
+        .then(() => {
+          return usersRef.update({
+            [this.drawUID]: {
+              numbers: this.submittedNumbers,
+              prize: this.priceWon,
+              timestamp: this.drawTimeStamp
+            }
+          })
+        })
+        .then(() => {
+          this.loading = false
+          this.handleGoToHome()
+        })
+        // eslint-disable-next-line
+        .catch((error) => {
+          this.loading = false
+          this.$q.notify({
+            color: 'red-4',
+            textColor: 'white',
+            icon: 'error',
+            message: 'There was an error saving your bet. Try again'
+          })
+        })
+    },
     generateRandomNumberBet () {
       const randomNumber = Math.floor(Math.random() * this.numbersRange) + 1
       if (this.randomDrawNumbers.includes(randomNumber)) {
@@ -108,6 +152,7 @@ export default {
       }, 4000)
     },
     beginLottery () {
+      this.drawTimeStamp = +new Date()
       this.timeOutBeginLottery = setTimeout(() => {
         this.repeatRandomNumberBet()
       }, 3000)
