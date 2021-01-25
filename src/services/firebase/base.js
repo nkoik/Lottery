@@ -22,6 +22,8 @@ export const initFireBase = (config) => {
 }
 
 export const handleOnAuthStateChanged = async (store, user) => {
+  store.commit('authorization/SET_USER', user !== null ? { email: user.email } : null)
+
   store.commit('authorization/SET_AUTH', {
     isAuthenticated: user !== null,
     isReady: true
