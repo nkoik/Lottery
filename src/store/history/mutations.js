@@ -3,7 +3,7 @@ export function SET_SELECTED_DRAW (state, payload) {
 }
 
 export function SET_DRAWS (state, payload) {
-  state.draws = payload
+  state.oldDraws = payload
 }
 
 export function RESET_SELECTED_DRAW (state) {
@@ -11,5 +11,5 @@ export function RESET_SELECTED_DRAW (state) {
 }
 
 export function RESET_DRAWS (state) {
-  state.draws = []
+  state.oldDraws = []
 }

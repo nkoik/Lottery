@@ -1,4 +1,5 @@
 export default {
   selectedDraw: null,
-  draws: []
+  oldDraws: [],
+  maxPerPage: 6
 }

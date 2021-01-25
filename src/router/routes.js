@@ -36,7 +36,7 @@ const routes = [
       {
         path: 'history',
         name: 'History',
-        component: () => import('pages/Main/Index.vue')
+        component: () => import('pages/Main/History.vue')
       }
     ]
   },
