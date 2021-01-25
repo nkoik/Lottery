@@ -38,7 +38,11 @@
      <q-dialog v-model="isModalOpen" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <q-avatar icon="verified" color="green-4" text-color="white" />
+          <q-avatar
+            :icon="priceWon > 0 ? 'verified' : 'clear'"
+            :color="priceWon > 0 ? 'green-4' : 'red-4'"
+            text-color="white"
+          />
           <div class="text-h6 q-ml-sm">
             Total winning amount: {{ priceWon + '€'}}
           </div>
@@ -113,13 +117,13 @@ export default {
         timestamp: this.drawTimeStamp
       })
         .then(() => {
-          return usersRef.update({
+          return usersRef.set({
             [this.drawUID]: {
               numbers: this.submittedNumbers,
               prize: this.priceWon,
               timestamp: this.drawTimeStamp
             }
-          })
+          }, { merge: true })
         })
         .then(() => {
           this.loading = false

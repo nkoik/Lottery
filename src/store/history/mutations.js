@@ -8,7 +8,7 @@ export function SET_DRAWS (state, payload) {
 
 export const DELETE_DRAW = function (state, payload) {
   const findIndex = state.oldDraws.findIndex(draw => draw.id === payload)
-  if (findIndex) {
+  if (findIndex !== undefined) {
     state.oldDraws.splice(findIndex, 1)
   }
 }
