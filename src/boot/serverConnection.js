@@ -3,6 +3,7 @@ import { firebaseConfig } from '../js/firebaseConfig'
 
 export default ({ router, store, Vue }) => {
   firebaseService.initFireBase(firebaseConfig)
+  firebaseService.db = firebaseService.openDB()
 
   // Tell the application what to do when the
   // authentication state has changed
