@@ -34,3 +34,22 @@ export const deleteDraw = function ({ commit, rootState }, payload) {
       })
   })
 }
+
+export const getDraw = function ({ commit, rootState }, id) {
+  const drawsRef = this.$fb.db.collection('draws').doc(id)
+  return new Promise((resolve, reject) => {
+    drawsRef.get()
+      .then(function (doc) {
+        if (doc.exists) {
+          const draw = doc.data()
+          commit('SET_SELECTED_DRAW', draw)
+          resolve(draw)
+        } else {
+          reject('No such document')
+        }
+      })
+      .catch(function (error) {
+        reject(error)
+      })
+  })
+}
