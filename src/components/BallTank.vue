@@ -8,7 +8,7 @@
           class="q-ma-sm"
           @delete="handleDelete"
           v-for="number in value"
-          :selected="value.includes(number)"
+          :selected="!selectable && value.includes(number)"
           :highlighted="highlightedNumbers.includes(number)"
           :key="number"
           :label="number"
@@ -35,6 +35,10 @@ export default {
       default: () => []
     },
     clearable: {
+      type: Boolean,
+      default: false
+    },
+    selectable: {
       type: Boolean,
       default: false
     }
