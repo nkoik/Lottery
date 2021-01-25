@@ -4,7 +4,7 @@
       <q-icon :name="ticket.won ? 'verified' : 'clear'" :color="ticket.won ? 'green-4' : 'red-4'" size="34px" />
     </q-item-section>
 
-    <q-item-section top class="col-2">
+    <q-item-section top class="col-sm-1">
       <q-item-label class="q-mt-sm">{{ ticket.won ? 'Won' : 'Lost' }}</q-item-label>
     </q-item-section>
 
@@ -12,9 +12,12 @@
       <q-item-label lines="1">
         <slot></slot>
       </q-item-label>
+    </q-item-section>
+
+    <q-item-section top>
       <q-item-label caption lines="1">
         <span class="text-grey-8"> Total winning amount: </span>
-        <span class="text-weight-large">{{ ticket.prize + '€' }}</span>
+        <span class="text-h5 text-weight-large">{{ ticket.prize + '€' }}</span>
       </q-item-label>
     </q-item-section>
 
