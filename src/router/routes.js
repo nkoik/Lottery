@@ -36,7 +36,20 @@ const routes = [
       {
         path: 'history',
         name: 'History',
-        component: () => import('pages/Main/History.vue')
+        component: () => import('pages/Main/History.vue'),
+        children: [
+          {
+            path: '',
+            name: 'HistoryDrawList',
+            component: () => import('pages/Main/HistoryDrawList.vue')
+          },
+          {
+            path: ':id',
+            name: 'HistoryDrawDetails',
+            component: () => import('pages/Main/HistoryDrawDetails.vue'),
+            props: true
+          }
+        ]
       }
     ]
   },

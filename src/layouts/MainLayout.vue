@@ -12,7 +12,7 @@
         <q-tabs align="left">
           <q-route-tab :to="{ name: 'Home' }" label="Home" :disable="isDrawOpen" />
           <q-route-tab :to="{ name: 'Draw' }" label="Live Draw" :disable="!isDrawOpen" />
-          <q-route-tab :to="{ name: 'History' }" label="History" :disable="isDrawOpen" />
+          <q-route-tab :to="{ name: 'HistoryDrawList' }" label="History" :disable="isDrawOpen" />
         </q-tabs>
         <!-- <q-space /> -->
       </q-toolbar>
@@ -50,7 +50,8 @@ export default {
   },
   methods: {
     ...mapMutations({
-      clearDrawState: 'draw/CLEAR_DRAW_STATE'
+      clearDrawState: 'draw/CLEAR_DRAW_STATE',
+      clearDrawHistory: 'history/RESET_DRAWS'
     }),
     ...mapActions({
       logoutUser: 'authorization/logoutUser'
@@ -59,6 +60,7 @@ export default {
       this.logoutUser()
         .then(() => {
           this.clearDrawState()
+          this.clearDrawHistory()
           this.$router.replace({ name: 'Login' })
         })
     }
