@@ -50,7 +50,7 @@ export default {
     dynamicProps () {
       const props = {
         outline: !this.selected && !this.highlighted,
-        color: this.highlighted ? 'dark' : 'indigo',
+        color: this.highlighted ? 'yellow-10' : 'indigo',
         round: true,
         disable: this.disabled,
         label: this.label
