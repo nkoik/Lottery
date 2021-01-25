@@ -39,6 +39,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    size: {
+      type: String,
+      default: 'md'
     }
   },
   data () {
@@ -53,11 +57,12 @@ export default {
         color: this.highlighted ? 'yellow-10' : 'indigo',
         round: true,
         disable: this.disabled,
-        label: this.label
+        label: this.label,
+        size: this.size
       }
       const { label, color, outline, ...restProps } = props
       return this.isClearHovered
-        ? { icon: 'clear', color: 'red', outline: false, ...restProps }
+        ? { icon: 'delete', color: 'red', outline: false, ...restProps }
         : props
     }
   },
