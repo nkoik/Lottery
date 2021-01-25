@@ -67,16 +67,23 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDraws: 'history/getDraws'
+      getDraws: 'history/getDraws',
+      deleteDraw: 'history/deleteDraw'
     }),
-    handleDeleteRow (id) {}
+    handleDeleteRow (id) {
+      this.deleteDraw(id)
+        .then(() => {
+          this.$q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'clear',
+            message: 'Draw deleted from history board'
+          })
+        })
+    }
   },
   mounted () {
     this.getDraws()
-    const f = this.paginatedDrawsList
-    if (f) {
-      this.loadingData = false
-    }
   }
 }
 </script>

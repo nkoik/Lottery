@@ -18,3 +18,19 @@ export const getDraws = function ({ commit, rootState }) {
       })
   })
 }
+
+export const deleteDraw = function ({ commit, rootState }, payload) {
+  const usersRef = this.$fb.db.collection('users').doc(rootState.authorization.user.email)
+  return new Promise((resolve, reject) => {
+    usersRef.update({
+      [payload]: this.$fb.deleteField()
+    })
+      .then(() => {
+        commit('DELETE_DRAW', payload)
+        resolve()
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
