@@ -7,6 +7,7 @@
       />
       <q-card class="flex column justify-between">
         <lottery-ball-tank
+          title="My BET"
           class="lottery-tank self-start"
           v-model="selectedNumbers"
           clearable
