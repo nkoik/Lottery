@@ -16,6 +16,13 @@ An option for saving bet and a history page exist.
 
 ## Technical Report
 
+### Application is deployed to Firebase
+
+```bash
+https://lottery-2f2e7.web.app
+```
+
+
 ### Install dependencies and Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
 npm i OR yarn add
@@ -51,3 +58,4 @@ Relational key between users and draws is the D-timestamp_draw.
 
 Pagination is cliend-side, Firestore queries limit is 10(free).
 All draws fetched from server saved to Vuex store until Logout or re-fetched.
+
