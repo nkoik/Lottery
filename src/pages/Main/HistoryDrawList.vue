@@ -1,11 +1,15 @@
 <template>
   <div class="flex column col-8">
-    <div v-if="!loading && paginatedDrawsList.length !== 0" class="flex row justify-around q-mb-md history-list">
+    <div class="flex row justify-between q-mb-md history-list">
       <q-card flat class="col-4 q-pa-md flex flex-center column">
         <q-item-label class="text-h5 text-grey-8">Total Amount Won</q-item-label>
         <q-card-section class="text-h6">{{ totalWon.sum + ' €' }}</q-card-section>
       </q-card>
       <q-card flat class="col-4 q-pa-md flex flex-center column">
+        <q-item-label class="text-h5 text-grey-8">Total Bet Coupons</q-item-label>
+        <q-card-section class="text-h6">{{ oldDraws.length }}</q-card-section>
+      </q-card>
+      <q-card flat class="col-3 q-pa-md flex flex-center column">
         <q-item-label class="text-h5 text-grey-8">Success Rate</q-item-label>
         <q-card-section class="text-h6">{{ wonPercentage + '%' }}</q-card-section>
       </q-card>
@@ -85,7 +89,7 @@ export default {
       }, { sum: 0, successCount: 0 })
     },
     wonPercentage () {
-      return Math.round(this.totalWon.successCount / this.oldDraws.length * 100)
+      return Math.round(this.totalWon.successCount / (this.oldDraws.length || 1) * 100)
     }
   },
   methods: {
@@ -104,7 +108,7 @@ export default {
           this.$q.notify({
             color: 'green-4',
             textColor: 'white',
-            icon: 'clear',
+            icon: 'delete',
             message: 'Draw deleted from history board'
           })
         })

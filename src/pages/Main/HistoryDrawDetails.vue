@@ -1,6 +1,6 @@
 <template>
   <q-card class="flex column">
-    <q-btn label="Go back" color="primary" :to="{ name: 'HistoryDrawList' }" />
+    <q-btn label="Go back" icon="arrow_back" color="primary" :to="{ name: 'HistoryDrawList' }" />
     <template v-if="!loading && drawDetails(id) !== null">
       <div class="flex flex-center">
         <q-icon
