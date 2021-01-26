@@ -59,9 +59,9 @@ export default {
     handleLogoutUser () {
       this.logoutUser()
         .then(() => {
+          this.$router.replace({ name: 'Login' })
           this.clearDrawState()
           this.clearDrawHistory()
-          this.$router.replace({ name: 'Login' })
         })
     }
   }

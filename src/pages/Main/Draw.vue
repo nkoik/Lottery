@@ -6,6 +6,7 @@
           :title="`Draw ${ drawTimeStamp ? `#${drawUID}` : ''}`"
           class="lottery-tank self-start"
           :value="randomDrawNumbers"
+          selectable
         />
         <div class="flex justify-center">
           <q-spinner-hourglass
