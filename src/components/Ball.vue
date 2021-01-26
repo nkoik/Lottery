@@ -1,7 +1,8 @@
 <template>
   <q-btn
     v-bind="dynamicProps"
-    @click="$emit(isClearHovered ? 'delete' : 'select', label)"
+    :class="{ 'no-pointer-events': disabled }"
+    @click="!disabled && $emit(isClearHovered ? 'delete' : 'select', label)"
   >
     <q-tooltip
       v-if="clearable"
@@ -56,7 +57,7 @@ export default {
         outline: !this.selected && !this.highlighted,
         color: this.highlighted ? 'yellow-10' : 'indigo',
         round: true,
-        disable: this.disabled,
+        // disable: this.disabled,
         label: this.label,
         size: this.size
       }
