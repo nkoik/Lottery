@@ -12,6 +12,7 @@
           :highlighted="highlightedNumbers.includes(number)"
           :key="number"
           :label="number"
+          :disabled="!clearable"
           :clearable="clearable"
         />
       </div>
